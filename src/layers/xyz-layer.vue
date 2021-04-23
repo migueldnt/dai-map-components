@@ -11,7 +11,7 @@ export default {
         ...defaultProps,
         xyzUrl:{
             type:String,
-            default:"https://a.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png"
+            default:"https://{a-c}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png"
         },
         attributions:{
             type:String,
