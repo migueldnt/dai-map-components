@@ -2,13 +2,17 @@
   "name": "dai-map-components",
   "version": "0.1.0",
   "private": true,
+  "files": [
+    "dist/*"
+  ],
+  "main": "./dist/dai-map-components.umd.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build --target lib src/index.js",
+    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/dev/vue.config.js vue-cli-service serve  dev/main.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "ol": "^6.5.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
@@ -38,5 +42,20 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "description": "pasos",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/migueldanto/dai-map-components.git"
+  },
+  "keywords": [
+    "maps",
+    "javascript"
+  ],
+  "author": "migueldanto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/migueldanto/dai-map-components/issues"
+  },
+  "homepage": "https://github.com/migueldanto/dai-map-components#readme"
 }
