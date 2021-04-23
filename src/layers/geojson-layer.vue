@@ -5,6 +5,7 @@ import defaultWatchers from "./_defaultLayerWatchers";
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import GeoJSON from 'ol/format/GeoJSON';
+import generateOlStyle from "./_json2olstyle"
 export default {
     props:{
         ...defaultProps,
@@ -19,6 +20,12 @@ export default {
                 return "none"
             }
         },
+        olstyle:{
+            type:[Function,Object],
+            default: function(){
+                return {} //deefinir un estilo global por default
+            }
+        }
     },
     data:function(){
         return{
@@ -28,13 +35,25 @@ export default {
     created:function(){
         let vm = this;
         vm.$parent.getMap(function(map){
+            let style;
+            if(typeof vm.olstyle == "function"){
+                style= function(feature){
+                    let serializes= vm.olstyle(feature)
+                    return generateOlStyle(serializes)["style"]
+                }
+            }else{
+                style=generateOlStyle(vm.olstyle)["style"]
+            }
+            
             let layer = new VectorLayer({
                 source:new VectorSource({
                     url: vm.source,
                     format: new GeoJSON()
                 }),
-                visible:vm.visible
+                visible:vm.visible,
+                style:style
             })
+            
             layer.set("id",vm.id)
             if(vm.tooltipContent!="none"){
                 

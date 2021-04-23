@@ -10,7 +10,7 @@
 
     let capas_con_tooltip = map.getLayers().getArray().filter(item=>item.get("_tooltip")!=undefined).map(item2=>item2.get("id"))
     //console.log(capas_con_tooltip)
-    //let tooltip_overlay = map.getOverlayById("tooltip")
+    let tooltip_overlay = map.getOverlayById("tooltip")
     //let tooltipelement = document.getElementById("fixed-tooltip-content");
     if (hit) {
         var f_l = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
@@ -31,20 +31,41 @@
                     contenido = contenido(feature.getProperties())
                 }
 
-                console.log(contenido,"es lo que acaba de pasar, este es el contenido a mandar en el tooltip")
+                //console.log(contenido,"es lo que acaba de pasar, este es el contenido a mandar en el tooltip")
+
+                let ext = map.getView().calculateExtent();
+                let x3 = (ext[0] + ext[2]) / 2;
+                let y3 = (ext[1] + ext[3]) / 2;
+                tooltip_overlay.setPosition([e.coordinate[0], e.coordinate[1]])
+                        //console.log(x3,e.coordinate[0])
+                if (e.coordinate[0] > x3) {
+                        tooltip_overlay.getElement().classList.remove("ol-tooltip-right");
+                        tooltip_overlay.getElement().classList.add("ol-tooltip-left");
+                } else {
+                        tooltip_overlay.getElement().classList.remove("ol-tooltip-left");
+                        tooltip_overlay.getElement().classList.add("ol-tooltip-right");
+                }
+                if (e.coordinate[1] > y3) {
+                        tooltip_overlay.getElement().classList.remove("ol-tooltip-top");
+                        tooltip_overlay.getElement().classList.add("ol-tooltip-bottom");
+                } else {
+                        tooltip_overlay.getElement().classList.remove("ol-tooltip-bottom");
+                        tooltip_overlay.getElement().classList.add("ol-tooltip-top");
+                }
+                tooltip_overlay.getElement().querySelector(".content").innerHTML = contenido
 
                 //componente.toltipcontent = componente._fn_tooltip(f_l[0].getProperties());
             } else {
-                //tooltip_overlay.setPosition(undefined)
+                tooltip_overlay.setPosition(undefined)
                 //tooltipelement.classList.remove("show")
             }
         } else {
 
-            //tooltip_overlay.setPosition(undefined)
+            tooltip_overlay.setPosition(undefined)
             //tooltipelement.classList.remove("show")
         }
     } else {
-        //tooltip_overlay.setPosition(undefined)
+        tooltip_overlay.setPosition(undefined)
         //tooltipelement.classList.remove("show")
     }
 }

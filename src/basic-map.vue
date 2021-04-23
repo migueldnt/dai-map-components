@@ -1,6 +1,7 @@
 <template>
     <div class="dai-map-container">
         <div ref="mapa" class="mapa"></div>
+        <div ref="tooltip" class="ol-tooltip"><div class="content"></div></div>
         <slot></slot>
     </div>
 </template>
@@ -8,11 +9,13 @@
 <script>
 
 import 'ol/ol.css';
+import "./tooltips.scss"
 import Map from 'ol/Map';
 //import OSM from 'ol/source/OSM';
 //import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
 import {invoke_tooltips} from "./_invokeTooltips"
+import Overlay from 'ol/Overlay';
 
 export default {
     props:{
@@ -49,6 +52,18 @@ export default {
                 projection: 'EPSG:4326',
             }),
         });
+        //tooltip overlay
+        let overlay_tooltip = new Overlay({
+            id: "tooltip",
+            element: this.$refs.tooltip,
+            autoPan: false,
+            stopEvent: false,
+            position: "center-center",
+            insertFirst: false
+        });
+        overlay_tooltip.setPosition(undefined);
+        this.map.addOverlay(overlay_tooltip);
+        //pointer move events
         this.map.on("pointermove",(evento)=>{
             if (evento.dragging) {
                 return;

@@ -1,0 +1,75 @@
+    //popup mapa
+.ol-tooltip {
+    min-width: 80px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.3);
+    border-radius: 4px;
+    font: normal normal 400 12px/14px "Montserrat",sans-serif;
+    padding: .75rem;
+    position: absolute;
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+}
+.ol-tooltip-right {
+    left: -50px;
+}
+.ol-tooltip-left {
+    right: -50px;
+}
+.ol-tooltip-top {
+    bottom: 15px;
+}
+.ol-tooltip-bottom {
+    top: 25px;
+}
+.ol-tooltip.ol-tooltip-right {
+    &::before {
+        left: 36px;
+    }
+    &::after {
+        left: 37px;
+    }
+}
+.ol-tooltip.ol-tooltip-left {
+    &::before {
+        right: 36px;
+    }
+    &::after {
+        right: 37px;
+    }
+}
+.ol-tooltip.ol-tooltip-top {
+    &::before{
+        border-width: 13px 11px 0 11px;
+        border-color: rgba(0,0,0,.1) transparent transparent;
+        bottom: -14px;
+    }
+    &::after {
+        border-width: 12px 10px 0 10px;
+        border-color: #fff transparent transparent;
+        bottom: -10px;
+    }
+}
+.ol-tooltip.ol-tooltip-bottom {
+    &::before{
+        border-width: 0 11px 13px 11px;
+        border-color: transparent transparent rgba(0,0,0,.1);
+        top: -12px;
+    }
+    &::after {
+        border-width: 0 10px 12px 10px;
+        border-color: transparent transparent #fff;
+        top: -10px;
+    }
+}
+@media screen and (min-width:1200px) {
+    .ol-tooltip {
+        white-space: nowrap;
+    }
+}
