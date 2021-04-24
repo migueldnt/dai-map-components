@@ -16,6 +16,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import {invoke_tooltips} from "./_invokeTooltips"
 import Overlay from 'ol/Overlay';
+import {Attribution, defaults as defaultControls} from 'ol/control';
 
 export default {
     props:{
@@ -38,11 +39,14 @@ export default {
     },
     data:function(){
         return{
-            titulo:"nombre",
+            layers:{},
             map:null
         }
     },
     mounted:function(){
+        var attribution = new Attribution({
+            collapsible: false,
+        });
         this.map = new Map({
             target: this.$refs.mapa,
             layers: [],
@@ -51,6 +55,7 @@ export default {
                 zoom: this.zoom,
                 projection: 'EPSG:4326',
             }),
+            controls:defaultControls({attribution: false}).extend([attribution])
         });
         //tooltip overlay
         let overlay_tooltip = new Overlay({
@@ -70,6 +75,17 @@ export default {
             }
             invoke_tooltips(this.map, evento)
         })
+        this.map.on("click",(e)=>{
+            var pixel = this.map.getEventPixel(e.originalEvent);
+            var hit = this.map.hasFeatureAtPixel(pixel);
+            if(hit){
+                console.log("hay algo")
+            }else{
+                console.log("no hay nada")
+            }
+            let hijos=this.$children
+            console.log(hijos)
+        })
 
     },
     methods:{
@@ -86,6 +102,14 @@ export default {
         },
         getLayers:function(){
             return this.map.getLayers().getArray()
+        },
+        _layer_register:function(id,component){
+            console.log(id,component)
+        }
+    },
+    provide: function(){
+        return{
+            layer_register:this._layer_register
         }
     }
 }

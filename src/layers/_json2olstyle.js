@@ -22,7 +22,7 @@ const equivalencias = {
 const convertirNode = (key,node)=>{
     let equivalencias_keys=Object.keys(equivalencias)
     let newnode= {}
-    console.log(node)
+    //console.log(node)
     Object.keys(node).forEach(subkey=>{
         let subnode = node[subkey]
         let new_subnode = {}
@@ -31,7 +31,7 @@ const convertirNode = (key,node)=>{
         }else{
             new_subnode[subkey] = subnode
         }
-        console.log(subkey,"--> |",new_subnode)
+        //console.log(subkey,"--> |",new_subnode)
         Object.assign(newnode,new_subnode)
     })
     let conversion = {}
@@ -40,7 +40,7 @@ const convertirNode = (key,node)=>{
 }
 
 export default function (serializedStyle){
-    console.log(serializedStyle)
+    //console.log(serializedStyle)
     let style = convertirNode("style",serializedStyle["style"]);
     return style
 }

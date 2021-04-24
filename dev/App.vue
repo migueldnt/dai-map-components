@@ -44,11 +44,11 @@ export default {
       style_estados: {
         style:  {
           fill: {
-            color: "green",
+            color: "blue",
           },
           stroke: {
             width: 1,
-            color: "red",
+            color: "gray",
           },
         },
       },

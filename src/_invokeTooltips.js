@@ -9,7 +9,7 @@
     var hit = map.hasFeatureAtPixel(pixel);
 
     let capas_con_tooltip = map.getLayers().getArray().filter(item=>item.get("_tooltip")!=undefined).map(item2=>item2.get("id"))
-    //console.log(capas_con_tooltip)
+    
     let tooltip_overlay = map.getOverlayById("tooltip")
     //let tooltipelement = document.getElementById("fixed-tooltip-content");
     if (hit) {

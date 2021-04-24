@@ -16,15 +16,17 @@ export default {
         },
         tooltipContent:{
             type:[Function,String],
-            default:function(){
-                return "none"
-            }
+            default:"none"
         },
         olstyle:{
             type:[Function,Object],
             default: function(){
                 return {} //deefinir un estilo global por default
             }
+        },
+        _clicks:{
+            type:Number,
+            default:0
         }
     },
     data:function(){
@@ -68,6 +70,11 @@ export default {
     },
     render:function(){
         return null
-    }
+    },
+    model:{
+        event:"click-feature",
+        prop: "_clicks"
+    },
+    inject:["layer_register"]
 }
 </script>
