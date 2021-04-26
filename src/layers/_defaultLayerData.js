@@ -1,3 +1,3 @@
 export default{
-    layer:null,
+    olLayer:null,
 }

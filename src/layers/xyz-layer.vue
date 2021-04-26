@@ -25,6 +25,7 @@ export default {
     },
     created:function(){
         let vm = this;
+        this.layer_register(this.id,this)
         vm.$parent.getMap(function(map){
             let layer = new TileLayer({
                 source: new XYZ({
@@ -35,7 +36,8 @@ export default {
             })
             layer.set("id",vm.id)
             map.addLayer(layer)
-            vm.layer=layer
+            vm.olLayer = layer;
+
         })
         
     },
@@ -44,7 +46,8 @@ export default {
     },
     render:function(){
         return null
-    }
+    },
+    inject:["layer_register"]
     
 }
 </script>

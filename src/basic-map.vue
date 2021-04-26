@@ -79,12 +79,12 @@ export default {
             var pixel = this.map.getEventPixel(e.originalEvent);
             var hit = this.map.hasFeatureAtPixel(pixel);
             if(hit){
-                console.log("hay algo")
-            }else{
-                console.log("no hay nada")
+                var f_l = this.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                    return [feature, layer];
+                });
+                let id=f_l[1].get("id")
+                this.layers[id].$emit("click_feature",f_l)
             }
-            let hijos=this.$children
-            console.log(hijos)
         })
 
     },
@@ -104,7 +104,7 @@ export default {
             return this.map.getLayers().getArray()
         },
         _layer_register:function(id,component){
-            console.log(id,component)
+            this.layers[id]=component
         }
     },
     provide: function(){

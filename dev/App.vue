@@ -12,6 +12,7 @@
         source="https://dadsigvisgeo.conacyt.mx/geoserver/vacunacion/wms?service=WMS&version=1.1.0&request=GetMap&layers=vacunacion:estados&bbox=-118.365119934082%2C14.5320978164673%2C-86.7104034423828%2C32.7186546325684&width=768&height=441&srs=EPSG%3A404000&format=geojson"
         :tooltipContent="(row) => `${row.cvegeo} eb sdsd`"
         :olstyle="style_estados"
+        @click_feature="sedioclick"
       />
 
     </dai-basic-map>
@@ -58,6 +59,9 @@ export default {
     apagar1: function () {
       this.xyz_visible = !this.xyz_visible;
     },
+    sedioclick:function(layer){
+      console.log("este es el layer",layer)
+    }
   },
 };
 </script>

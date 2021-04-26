@@ -31,11 +31,12 @@ export default {
     },
     data:function(){
         return{
-            ...defaultData
+            ...defaultData,
         }
     },
     created:function(){
         let vm = this;
+        this.layer_register(this.id,this)
         vm.$parent.getMap(function(map){
             let style;
             if(typeof vm.olstyle == "function"){
@@ -63,10 +64,13 @@ export default {
             }
 
             map.addLayer(layer)
+            vm.olLayer = layer;
         })
     },
     watch:{
         ...defaultWatchers
+    },
+    methods:{
     },
     render:function(){
         return null
