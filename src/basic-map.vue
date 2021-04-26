@@ -10,13 +10,14 @@
 
 import 'ol/ol.css';
 import "./tooltips.scss"
+import "./styles.scss"
 import Map from 'ol/Map';
-//import OSM from 'ol/source/OSM';
-//import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
-import {invoke_tooltips} from "./_invokeTooltips"
+import {invoke_tooltips} from "./_invokeTooltips";
+import {invoke_clicks} from "./_invokeClicks";
 import Overlay from 'ol/Overlay';
 import {Attribution, defaults as defaultControls} from 'ol/control';
+import createZoomExtentControl from "./_zoomAll.js"
 
 export default {
     props:{
@@ -40,13 +41,18 @@ export default {
     data:function(){
         return{
             layers:{},
-            map:null
+            map:null,
+            hasInitialExtent:false,
+            highlight_feature:undefined
         }
     },
     mounted:function(){
         var attribution = new Attribution({
             collapsible: false,
         });
+        if(this.extent[0]!=0 && this.extent[3]!=0){
+            this.hasInitialExtent = true;
+        }
         this.map = new Map({
             target: this.$refs.mapa,
             layers: [],
@@ -57,6 +63,21 @@ export default {
             }),
             controls:defaultControls({attribution: false}).extend([attribution])
         });
+        if(this.hasInitialExtent){
+            this.map.getView().fit(this.extent,{duration:500,padding: [10, 10, 10, 10]})
+        }
+        let controlZoomAll = createZoomExtentControl( ()=>{
+            if (this.highlight_feature) {
+                this.highlight_feature.set("_hightlight", false);
+            }
+            if(this.hasInitialExtent){
+                this.map.getView().fit(this.extent,{duration:500,padding: [10, 10, 10, 10]})
+            }else{
+                this.map.getView().animate({zoom:this.zoom,center:this.center})
+            }
+            this.$emit("resetView",this.map)
+        } )
+        this.map.addControl(controlZoomAll)
         //tooltip overlay
         let overlay_tooltip = new Overlay({
             id: "tooltip",
@@ -76,15 +97,8 @@ export default {
             invoke_tooltips(this.map, evento)
         })
         this.map.on("click",(e)=>{
-            var pixel = this.map.getEventPixel(e.originalEvent);
-            var hit = this.map.hasFeatureAtPixel(pixel);
-            if(hit){
-                var f_l = this.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-                    return [feature, layer];
-                });
-                let id=f_l[1].get("id")
-                this.layers[id].$emit("click_feature",f_l)
-            }
+            invoke_clicks(this.map,e,this)
+            
         })
 
     },
@@ -111,7 +125,11 @@ export default {
         return{
             layer_register:this._layer_register
         }
-    }
+    },
+    model:{
+        event:"resetView",
+        prop: "extent"
+    },
 }
 </script>
 

@@ -3,8 +3,8 @@
     <dai-basic-map
       class="hola-mapa"
       ref="daiBasicMap"
-      :center="[-102.579, 23.944]"
-      :zoom="6"
+      :extent="[-118.365119934082,14.5320978164673,-86.7104034423828,32.7186546325684]"
+      @resetView="al_resetaer"
     >
       <dai-xyz-layer :visible="xyz_visible" />
       <dai-geojson-layer
@@ -61,6 +61,9 @@ export default {
     },
     sedioclick:function(layer){
       console.log("este es el layer",layer)
+    },
+    al_resetaer:function(mapa){
+      console.log("se escucha el reseteo ahora",mapa)
     }
   },
 };

@@ -42,10 +42,17 @@ export default {
             if(typeof vm.olstyle == "function"){
                 style= function(feature){
                     let serializes= vm.olstyle(feature)
-                    return generateOlStyle(serializes)["style"]
+                    serializes = feature.get("_hightlight") == true ? serializedStyleIfHighlight(serializes): serializes ;
+                    let olstyles=generateOlStyle(serializes)["style"]
+                    return olstyles
                 }
             }else{
-                style=generateOlStyle(vm.olstyle)["style"]
+                style = function(feature){
+                    let serializes= vm.olstyle
+                    serializes = feature.get("_hightlight") ==true ? serializedStyleIfHighlight(serializes): serializes ;
+                    let olstyles=generateOlStyle(serializes)["style"]
+                    return olstyles
+                }
             }
             
             let layer = new VectorLayer({
@@ -81,4 +88,17 @@ export default {
     },
     inject:["layer_register"]
 }
+
+
+const serializedStyleIfHighlight=function(serializedStyle){
+    let serialized2= JSON.parse(JSON.stringify(serializedStyle))
+    if("stroke" in serialized2["style"]){
+        serialized2["style"]["stroke"]["color"] = "black"
+        serialized2["style"]["stroke"]["width"] = 2
+        serialized2["style"]["zIndex"] = 2;
+    } 
+    //console.log(serializedStyle,serialized2)
+    return serialized2
+}
+
 </script>

@@ -15,7 +15,7 @@ export default {
         },
         attributions:{
             type:String,
-            default:'© <a href="https://carto.com/">Carto</a>'
+            default:' &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, © <a href="https://carto.com/">Carto</a>'
         }
     },
     data:function(){
