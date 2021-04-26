@@ -60,6 +60,7 @@ export default {
                 center: this.center,
                 zoom: this.zoom,
                 projection: 'EPSG:4326',
+                maxZoom: 20
             }),
             controls:defaultControls({attribution: false}).extend([attribution])
         });
