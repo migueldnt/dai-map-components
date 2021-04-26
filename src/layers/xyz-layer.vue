@@ -32,7 +32,9 @@ export default {
                     url: vm.xyzUrl,
                     attributions:vm.attributions
                 }),
-                visible: vm.visible
+                visible: vm.visible,
+                opacity: vm.opacity,
+                zIndex: vm.zIndex
             })
             layer.set("id",vm.id)
             map.addLayer(layer)

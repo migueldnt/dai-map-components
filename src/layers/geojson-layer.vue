@@ -61,7 +61,9 @@ export default {
                     format: new GeoJSON()
                 }),
                 visible:vm.visible,
-                style:style
+                style:style,
+                opacity: vm.opacity,
+                zIndex: vm.zIndex
             })
             
             layer.set("id",vm.id)

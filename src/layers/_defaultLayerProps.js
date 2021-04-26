@@ -9,10 +9,10 @@ export default {
     },
     zIndex:{
         type:Number,
-        default:0
+        default:undefined
     },
-    basemap:{
-        type:Boolean,
-        default:false
+    opacity:{
+        type:Number,
+        default:1
     }
 }

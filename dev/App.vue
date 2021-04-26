@@ -13,6 +13,7 @@
         :tooltipContent="(row) => `${row.cvegeo} eb sdsd`"
         :olstyle="style_estados"
         @click_feature="sedioclick"
+        :opacity=".8"
       />
 
     </dai-basic-map>
